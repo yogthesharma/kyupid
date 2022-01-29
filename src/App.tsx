@@ -124,6 +124,10 @@ function App() {
         zoom: zoom,
       });
 
+      map.on("sourcedata", () => {
+        setLoading(false);
+      });
+
       map.on("load", () => {
         const popup = new mapboxgl.Popup({
           closeButton: false,
@@ -131,7 +135,6 @@ function App() {
         });
         if (geoJson && geoJson.features) {
           if (processedGeoJson) {
-            setLoading(false);
             processedGeoJson.forEach((mapElem) => {
               map.addSource(mapElem.properties.area_id.toString(), {
                 type: "geojson",
